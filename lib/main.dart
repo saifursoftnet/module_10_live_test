@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
+
 void main(){
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget{
   const MyApp({super.key});
 
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget{
       title: "My App",
     );
   }
+
 }
+
 class HomeScreenState extends StatefulWidget{
   const HomeScreenState({super.key});
 
@@ -36,6 +39,30 @@ class HomeScreenUI extends State<HomeScreenState>{
     Items("Item4", 0),
     Items("Item5", 0),
   ];
+  void selectedItems(){
+    for(int i=0; i < itemList.length; i++){
+      if(itemList[i].status != 0){
+        count++;
+      }
+    }
+  }
+  itemSelectedAlert(){
+    return showDialog(context: context, barrierDismissible: false ,builder: (context){
+      return AlertDialog(
+        title: const Text("Selected Item"),
+        content: Text('You have Selected: $count'),
+        actions: [
+          ElevatedButton(
+              onPressed: (){
+                count = 0;
+                Navigator.pop(context);
+              },
+              child: const Text("Close")
+          )
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +72,8 @@ class HomeScreenUI extends State<HomeScreenState>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-
+          selectedItems();
+          itemSelectedAlert();
         },
         child: const Icon(Icons.check),
       ),
@@ -53,7 +81,7 @@ class HomeScreenUI extends State<HomeScreenState>{
           itemCount: itemList.length,
           itemBuilder: (context, index){
             return Card(
-              color: Color(itemList[index].status == 0 ? 0xFFFFFF : 0xFF0000FF),
+              color: Color(itemList[index].status == 0 ? 0xFFFFFF : 0xFFADD8E5),
               child: ListTile(
                 onTap: (){
                   if(itemList[index].status == 0){
